@@ -1,0 +1,31 @@
+/**
+ * Colores:
+ * GrisOscuro: rgb(10,20,20)
+ * RojoAnaranjado: rgb(255,100,0)
+ * AmarilloLuminoso: rgb(255,255,100)
+ * AmarilloIntenso: rgb(255,255,0)
+ */
+ 
+body{
+	color: rgb(255,255,100);
+	background-color: rgb(255,100,0);
+	overflow: hidden;
+	align:center;
+}
+
+/**ELEMENTOS INTERFAZ**/
+#pantalla{
+	display:inlineBlock;
+	margin:auto;
+	background-color: rgb(10,20,20);
+	border-radius:25px;
+}
+
+#pantalla>canvas{
+	position:absolute;
+	border-radius:25px;
+}
+
+#imagenes{
+	display:none;
+}
