@@ -20,6 +20,7 @@ function RaggedWinionGame(
 	var fotogramas = 0;
 	
 	var ciclo = 20;
+	var duracionNivel = 30000;
 	var velocidadMax = 20;
 	var velocidadMin = 10;
 	var velocidad = velocidadMin;
@@ -46,8 +47,10 @@ function RaggedWinionGame(
 	var contextoVideo = video.getContext("2d");
 	var contadorFpsVideo = new ContadorFPS(video, fps);
 	
+	var finalBoss = true;
 	
-	/**Funciones de Inicio - Onload functions**/
+	
+	/**Funciones de Inicio - Onload Methods**/
 	redimensionar();
 	
 	/**Asignacion de Eventos - Events' Asignations**/
@@ -67,6 +70,7 @@ function RaggedWinionGame(
 				video.style.backgroundColor = "rgb(90,20,20)";
 				texto("GAME OVER (esc)");
 				subTextoDer(puntuacion+" puntos");
+				interfaz();
 			}
 			
 			else if(!pausa){
@@ -76,6 +80,7 @@ function RaggedWinionGame(
 			else{
 				video.style.backgroundColor = "rgb(10,20,20)";
 				texto("Pulsa 'Enter' para continuar");
+				interfaz();
 				subTextoDer(puntuacion+" puntos");
 			}
 		}
@@ -85,7 +90,10 @@ function RaggedWinionGame(
 	/******* FIN DEL CONSTRUCTOR *******/
 	
 
-	
+	/**
+	 * Método que genera un ciclo de proceso.
+	 * Method which generates an evaluation process.
+	 */
 	function nuevoCiclo(){
 		var fechaActual = new Date().getTime();
 		var tiempoEntreFotogramas = Math.ceil(fechaActual - fechaUltimoFotograma);
@@ -116,24 +124,54 @@ function RaggedWinionGame(
 			dibujar(tiempoDesdeInicio);
 		}
 		
-		supTextoDer("Nivel "+parseInt((tiempoDesdeInicio / 60000)+1));
-		subTextoDer(puntuacion+" puntos")
+		supTextoDer("Nivel "+parseInt((tiempoDesdeInicio / duracionNivel)+1));
+		subTextoDer(puntuacion+" puntos");
+		interfaz();
 	};
 	
 	/**
-	 * Función que realiza los eventos pertinentes del fotograma actual.
+	 * Método que realiza los eventos pertinentes del fotograma actual.
+	 * Method which makes the events from the actual photogram.
 	 */
 	function eventos(tiempoDesdeInicio){
 		/**Eventos de nivel**/
-		if(tiempoDesdeInicio >= 60000 * 2){
+		if(tiempoDesdeInicio >= duracionNivel * 10){
+			nivel0(tiempoDesdeInicio);
+		}
+		
+		else if(tiempoDesdeInicio >= duracionNivel * 8 && tiempoDesdeInicio < duracionNivel * 9){
+			nivel9(tiempoDesdeInicio);
+		}
+		
+		else if(tiempoDesdeInicio >= duracionNivel * 7 && tiempoDesdeInicio < duracionNivel * 8){
+			nivel8(tiempoDesdeInicio);
+		}
+		
+		else if(tiempoDesdeInicio >= duracionNivel * 6 && tiempoDesdeInicio < duracionNivel * 7){
+			nivel7(tiempoDesdeInicio);
+		}
+		
+		else if(tiempoDesdeInicio >= duracionNivel * 5 && tiempoDesdeInicio < duracionNivel * 6){
+			nivel6(tiempoDesdeInicio);
+		}
+		
+		else if(tiempoDesdeInicio >= duracionNivel * 4 && tiempoDesdeInicio < duracionNivel * 5){
+			nivel5(tiempoDesdeInicio);
+		}
+		
+		else if(tiempoDesdeInicio >= duracionNivel * 3 && tiempoDesdeInicio < duracionNivel * 4){
+			nivel4(tiempoDesdeInicio);
+		}
+		
+		else if(tiempoDesdeInicio >= duracionNivel * 2 && tiempoDesdeInicio < duracionNivel * 3){
 			nivel3(tiempoDesdeInicio);
 		}
 		
-		else if(tiempoDesdeInicio>= 60000 && tiempoDesdeInicio < 60000 * 2){
+		else if(tiempoDesdeInicio >= duracionNivel && tiempoDesdeInicio < duracionNivel * 2){
 			nivel2(tiempoDesdeInicio);
 		}
 		
-		else if(tiempoDesdeInicio >= 8000 && tiempoDesdeInicio < 60000){
+		else if(tiempoDesdeInicio >= 8000 && tiempoDesdeInicio < duracionNivel){
 			nivel1(tiempoDesdeInicio);
 		}
 		
@@ -165,7 +203,8 @@ function RaggedWinionGame(
 	
 	
 	/**
-	 * Función que dibuja el fotograma actual.
+	 * Método que dibuja el fotograma actual.
+	 * Method wich draws the photogram.
 	 */
 	function dibujar(tiempoDesdeInicio){
 		for(var i = 0; i < elementos.length; i++){
@@ -177,8 +216,8 @@ function RaggedWinionGame(
 	
 	
 	/**
-	 * Función que muestra un texto en el contexto de animaciones
-	 * Function that shows a text in animation context
+	 * Método que muestra un texto en el contexto.
+	 * Method that shows a text in the context.
 	 */
 	function texto(contenido){
 		contextoVideo.font = (40*zoom)+"px Sans Sherif";
@@ -189,8 +228,8 @@ function RaggedWinionGame(
 	
 	
 	/**
-	 * Función que muestra un texto en el contexto de animaciones
-	 * Function that shows a text in animation context
+	 * Método que muestra un texto en el contexto.
+	 * Method that shows a text in the context.
 	 */
 	function supTextoDer(contenido){
 		contextoVideo.font = (40*zoom)+"px Sans Sherif";
@@ -201,8 +240,33 @@ function RaggedWinionGame(
 	
 	
 	/**
-	 * Función que muestra un texto en el contexto de animaciones
-	 * Function that shows a text in animation context
+	 * Método que muestra un texto en el contexto.
+	 * Method that shows a text in the context.
+	 */
+	function supTextoIzq(contenido){
+		contextoVideo.font = (40*zoom)+"px Sans Sherif";
+		contextoVideo.fillStyle = "white";
+		contextoVideo.textAlign = "left";
+		contextoVideo.fillText(contenido, 40*zoom, 40*zoom);
+	};
+	
+	
+	/**
+	 * Método que muestra la interfaz de juego.
+	 * Method that shows the gaming interface.
+	 */
+	function interfaz(){
+		img = new Image();
+		img.src = "src/cristal" + velocidad +".png";
+		if(img != null){
+			contextoVideo.drawImage(img, parseInt((ancho/2 - 40) * zoom), parseInt(10*zoom), 80*zoom, 120*zoom);
+		}
+	};
+	
+	
+	/**
+	 * Método que muestra un texto en el contexto de animaciones
+	 * Method that shows a text in animation context
 	 */
 	function subTextoDer(contenido){
 		contextoVideo.font = (20*zoom)+"px Sans Sherif";
@@ -213,14 +277,14 @@ function RaggedWinionGame(
 	
 	
 	/**
-	 * Función que altera el color gradualmente.
-	 * Function that change color gradually.
+	 * Método que altera el color gradualmente.
+	 * Method that change color gradually.
 	 */
 	function cambiarColor(tiempoDesdeInicio){
-		var azulInicial = 255;
 		var rojoInicial = 100;
 		var verdeInicial = 100;
-		var velocidadCambioColor = (10 * 60 * 1000) / (azulInicial + rojoInicial);
+		var azulInicial = 255;
+		var velocidadCambioColor = (duracionNivel * 10) / (azulInicial + rojoInicial);
 		
 		blue = azulInicial - parseInt(tiempoDesdeInicio / velocidadCambioColor);
 		
@@ -246,13 +310,14 @@ function RaggedWinionGame(
 		}
 		
 		bgColor = "rgba("+ red +","+ green +","+ blue +", 1)";
-		
+		console.log(bgColor)
 		pantalla.style.backgroundColor = bgColor;
 	};
 	
 	
 	/**
-	 * Función que comprueba si el personaje está apoyado.
+	 * Método que comprueba si el personaje está apoyado.
+	 * Method which verify if the character is on the floor.
 	 */
 	function verificarApoyo(){
 		for(var i = 0; i < elementos.length; i++){
@@ -284,7 +349,8 @@ function RaggedWinionGame(
 	
 	
 	/**
-	 * Función que comprueba si el personaje ha chocado contra algun elemento y muere.
+	 * Método que comprueba si el personaje ha chocado contra algun elemento y muere.
+	 * Method which verify if the character crash with an enemy and die.
 	 */
 	function verificarColisionMortal(){
 		for(var i = 0; i < elementos.length; i++){
@@ -333,8 +399,8 @@ function RaggedWinionGame(
 	
 	
 	/**
-	 * Función que cambia la velocidad del juego.
-	 * Function that changes game speed.
+	 * Método que cambia la velocidad del juego.
+	 * Method that changes game speed.
 	 * 
 	 * @param incremento - Cambio producido en la velocidad.
 	 */
@@ -353,18 +419,27 @@ function RaggedWinionGame(
 	
 	
 	/**
-	 * Función que pausa el juego.
-	 * Function that pauses the game.
+	 * Método que pausa el juego.
+	 * Method that pauses the game.
 	 */
 	function pausar(){
 		if(!inicio){
 			inicio = true;
+			
 			fotograma = 0;
 			fechaUltimoFotograma = new Date().getTime();
 			fechaInicio = fechaUltimoFotograma;
 			fechaUltimaPausa = new Date().getTime();
 			tiempoEnPausa = 0;
+			
+			red = 100;
+			blue = 255;
+			green = 100;
+			bgColor = "rgb("+ red +","+ green +","+ blue +")";
+			
+			elementos = [];
 			puntuacion = 0;
+			finalBoss = true;
 		}
 		
 		if(pausa){
@@ -382,8 +457,8 @@ function RaggedWinionGame(
 	
 	
 	/**
-	 * Función que evalua que tecla se ha pulsado y en algunos casos llama a otras funciones.
-	 * Function that verifies which key was pressed and, in some cases, call other functions.
+	 * Método que evalua que tecla se ha pulsado y en algunos casos llama a otras funciones.
+	 * Method that verifies which key was pressed and, in some cases, call other functions.
 	 */
 	function verificarTecla(e){
 		switch(e.keyCode){
@@ -416,8 +491,8 @@ function RaggedWinionGame(
 	
 	
 	/**
-	 * Función que actualiza el zoom del videojuego en función del tamaño de pantalla.
-	 * Function which resize videogame's zoom depending on pantalla size.
+	 * Método que actualiza el zoom del videojuego en Método del tamaño de pantalla.
+	 * Method which resize videogame's zoom depending on pantalla size.
 	 */
 	function redimensionar(e){
 		zoom = pantalla.offsetWidth / ancho;
@@ -436,8 +511,8 @@ function RaggedWinionGame(
 	 */
 	function nivel0(tiempoDesdeInicio){
 		/**Elementos Video**/
-		var frecuenciaTierra = 4000 / velocidad;
-		if(tiempoDesdeInicio % frecuenciaTierra < ciclo){
+		var frecuenciaSuelo = 4000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaSuelo < ciclo){
 			elementos.push(
 				new RaggedWinionElement(
 					40
@@ -480,8 +555,8 @@ function RaggedWinionGame(
 	 */
 	function nivel1(tiempoDesdeInicio){
 		/**Elementos Video**/
-		var frecuenciaTierra = 4000 / velocidad;
-		if(tiempoDesdeInicio % frecuenciaTierra < ciclo){
+		var frecuenciaSuelo = 4000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaSuelo < ciclo){
 			elementos.push(
 				new RaggedWinionElement(
 					40
@@ -518,8 +593,8 @@ function RaggedWinionGame(
 			);
 		}
 		
-		var frecuenciaSoldado = 8000 / velocidad;
-		if(tiempoDesdeInicio % frecuenciaSoldado < ciclo){
+		var frecuenciaEnemigo = 8000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaEnemigo < ciclo){
 			switch(parseInt(Math.random() * 10)){
 				case 0:
 				case 1:
@@ -547,7 +622,7 @@ function RaggedWinionGame(
 				case 7:
 					elementos.push(
 							new RaggedWinionElement(
-								40
+								15
 								, "soldadoEspada"
 								, tiempoDesdeInicio
 								, alto-170
@@ -576,7 +651,7 @@ function RaggedWinionGame(
 		if(tiempoDesdeInicio % frecuenciaNube < ciclo){
 			elementos.push(
 				new RaggedWinionElement(
-					40
+					21
 					, "nube"
 					, tiempoDesdeInicio
 					, parseInt(parseInt(Math.random() * 5) * alto / 5 + 100) 
@@ -584,7 +659,7 @@ function RaggedWinionGame(
 					, 200
 					, true
 					, false
-					, parseInt(Math.random() * 10)
+					, parseInt(Math.random() * 12)
 					, 0
 				)
 			);
@@ -598,27 +673,46 @@ function RaggedWinionGame(
 	 */
 	function nivel3(tiempoDesdeInicio){
 		/**Elementos **/
-		var frecuenciaNube = 1400 / velocidad;
+		var frecuenciaNube = 1200 / velocidad;
 		if(tiempoDesdeInicio % frecuenciaNube < ciclo){
-			elementos.push(
-				new RaggedWinionElement(
-					21
-					, "nube"
-					, tiempoDesdeInicio
-					, parseInt(parseInt(Math.random() * 5) * alto / 5 + 100) 
-					, 120
-					, 200
-					, true
-					, false
-					, parseInt(Math.random() * 12)
-					, 0
-				)
-			);
+
+			if(Math.random() * 2 < 1){
+				elementos.push(
+					new RaggedWinionElement(
+						21
+						, "nubegris"
+						, tiempoDesdeInicio
+						, parseInt(parseInt(Math.random() * 5) * alto / 5 + 100) 
+						, 120
+						, 200
+						, true
+						, false
+						, parseInt(Math.random() * 14)
+						, 0
+					)
+				);
+			}
+			else{
+				elementos.push(
+					new RaggedWinionElement(
+						21
+						, "nube"
+						, tiempoDesdeInicio
+						, parseInt(parseInt(Math.random() * 5) * alto / 5 + 100) 
+						, 120
+						, 200
+						, true
+						, false
+						, parseInt(Math.random() * 12)
+						, 0
+					)
+				);
+			}
 		}
 		
 		/**Elementos **/
-		var frecuenciaHalcon = 20000 / velocidad;
-		if(tiempoDesdeInicio % frecuenciaHalcon < ciclo){
+		var frecuenciaEnemigo = 25000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaEnemigo < ciclo){
 			elementos.push(
 				new RaggedWinionElement(
 					5
@@ -634,6 +728,478 @@ function RaggedWinionGame(
 				)
 			);
 			puntuacion += 12;
+		}
+	};
+
+	
+	/**
+	 * 
+	 */
+	function nivel4(tiempoDesdeInicio){
+		/**Elementos **/
+		var frecuenciaNube = 1200 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaNube < ciclo){
+			elementos.push(
+				new RaggedWinionElement(
+					21
+					, "nubegris"
+					, tiempoDesdeInicio
+					, parseInt(parseInt(Math.random() * 5) * alto / 5 + 100) 
+					, 120
+					, 200
+					, true
+					, false
+					, parseInt(Math.random() * 14)
+					, 0
+				)
+			);
+		}
+		
+		var frecuenciaNubeTormentosa = 20000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaNubeTormentosa < ciclo){
+			elementos.push(
+				new RaggedWinionElement(
+					1000
+					, "nubetormentosa"
+					, tiempoDesdeInicio
+					, parseInt(parseInt(Math.random() * 5) * alto / 5 + 100) 
+					, 100
+					, 160
+					, true
+					, true
+					, parseInt(Math.random() * 8)
+					, 0
+				)
+			);
+			puntuacion += 10;
+		}
+		
+		/**Elementos **/
+		var frecuenciaEnemigo = 90000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaEnemigo < ciclo){
+			elementos.push(
+				new RaggedWinionElement(
+					5
+					, "halcon"
+					, tiempoDesdeInicio
+					, parseInt(parseInt(Math.random() * 5) * alto / 5 + 150) 
+					, 75
+					, 150
+					, true
+					, true
+					, parseInt(Math.random() * 3) * 5 + 6
+					, parseInt(Math.random() * 11) - 5
+				)
+			);
+			puntuacion += 12;
+		}
+	};
+
+	
+	/**
+	 * 
+	 */
+	function nivel5(tiempoDesdeInicio){
+		/**Elementos **/
+		var frecuenciaNube = 1200 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaNube < ciclo){
+			if(Math.random()  * 4 < 1){
+				elementos.push(
+					new RaggedWinionElement(
+						21
+						, "nubemalvada"
+						, tiempoDesdeInicio
+						, parseInt(parseInt(Math.random() * 5) * alto / 5 + 100) 
+						, 120
+						, 240
+						, true
+						, false
+						, parseInt(Math.random() * 10 + 8)
+						, 0
+					)
+				);
+			}
+			else{
+				elementos.push(
+					new RaggedWinionElement(
+						21
+						, "nubegris"
+						, tiempoDesdeInicio
+						, parseInt(parseInt(Math.random() * 5) * alto / 5 + 100) 
+						, 120
+						, 200
+						, true
+						, false
+						, parseInt(Math.random() * 14)
+						, 0
+					)
+				);
+			}
+		}
+		
+		var frecuenciaNubeTormentosa = 14000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaNubeTormentosa < ciclo){
+			elementos.push(
+				new RaggedWinionElement(
+					21
+					, "nubetormentosa"
+					, tiempoDesdeInicio
+					, parseInt(parseInt(Math.random() * 5) * alto / 5 + 100) 
+					, 180
+					, 280
+					, true
+					, true
+					, parseInt(Math.random() * 10)
+					, 0
+				)
+			);
+			puntuacion += 14;
+		}
+	};
+
+	
+	/**
+	 * 
+	 */
+	function nivel6(tiempoDesdeInicio){
+		/**Elementos **/
+		var frecuenciaNube = 1200 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaNube < ciclo){
+			elementos.push(
+				new RaggedWinionElement(
+					21
+					, "nubemalvada"
+					, tiempoDesdeInicio
+					, parseInt(parseInt(Math.random() * 5) * alto / 5 + 100) 
+					, 120
+					, 240
+					, true
+					, false
+					, parseInt(Math.random() * 10 + 8)
+					, 0
+				)
+			);
+		}
+		
+		var frecuenciaAlma = 15000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaAlma < ciclo){
+			elementos.push(
+					new RaggedWinionElement(
+						21
+						, "alma"
+						, tiempoDesdeInicio
+						, -100 
+						, 80
+						, 80
+						, true
+						, true
+						, 0
+						, parseInt(Math.random() * 20 + 5)
+					)
+				);
+			puntuacion += 15;
+		}
+	};
+
+	
+	/**
+	 * 
+	 */
+	function nivel7(tiempoDesdeInicio){
+		var frecuenciaSuelo = 4000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaSuelo < ciclo){
+			elementos.push(
+				new RaggedWinionElement(
+					21
+					, "huesos"
+					, tiempoDesdeInicio
+					, alto-50
+					, 120
+					, ancho
+					, true
+					, false
+					, 0
+					, 0
+				)
+			);
+		}
+		
+		/**Elementos **/
+		var frecuenciaNube = 10000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaNube < ciclo){
+			elementos.push(
+				new RaggedWinionElement(
+					21
+					, "nubemalvada"
+					, tiempoDesdeInicio
+					, parseInt(parseInt(Math.random() * 3 - 1) * alto / 5 + 100) 
+					, 120
+					, 240
+					, true
+					, false
+					, parseInt(Math.random() * 10 + 8)
+					, 0
+				)
+			);
+		}
+		
+		var frecuenciaAlma = 15000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaAlma < ciclo){
+			elementos.push(
+					new RaggedWinionElement(
+						21
+						, "alma"
+						, tiempoDesdeInicio
+						, -100 
+						, 80
+						, 80
+						, true
+						, true
+						, 0
+						, parseInt(Math.random() * 20 + 5)
+					)
+				);
+			puntuacion += 15;
+		}
+	};
+
+	
+	/**
+	 * 
+	 */
+	function nivel8(tiempoDesdeInicio){
+		var frecuenciaSuelo = 4000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaSuelo < ciclo){
+			elementos.push(
+				new RaggedWinionElement(
+					40
+					, "huesos"
+					, tiempoDesdeInicio
+					, alto-50
+					, 120
+					, ancho
+					, true
+					, false
+					, 0
+					, 0
+				)
+			);
+		}
+		
+		/**Elementos **/
+		var frecuenciaNube = 10000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaNube < ciclo){
+			elementos.push(
+				new RaggedWinionElement(
+					21
+					, "nubemalvada"
+					, tiempoDesdeInicio
+					, parseInt(parseInt(Math.random() * 3 - 1) * alto / 5 + 100) 
+					, 120
+					, 240
+					, true
+					, false
+					, parseInt(Math.random() * 10 + 8)
+					, 0
+				)
+			);
+		}
+		
+		var frecuenciaAlma = 18000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaAlma < ciclo){
+			elementos.push(
+					new RaggedWinionElement(
+						21
+						, "alma"
+						, tiempoDesdeInicio
+						, -100 
+						, 80
+						, 80
+						, true
+						, true
+						, 0
+						, parseInt(Math.random() * 15 + 10)
+					)
+				);
+			puntuacion += 15;
+		}
+		
+		var frecuenciaEnemigo = 8000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaEnemigo < ciclo){
+			switch(parseInt(Math.random() * 10)){
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+					elementos.push(
+							new RaggedWinionElement(
+								Math.random()*10
+								, "minion"
+								, tiempoDesdeInicio
+								, alto-140
+								, 100
+								, 75
+								, false
+								, true
+								, 10
+								, 0
+							)
+						);
+						puntuacion += 6;
+					break;
+				case 5:
+				case 6:
+				case 7:
+					elementos.push(
+							new RaggedWinionElement(
+								15
+								, "esqueleto"
+								, tiempoDesdeInicio
+								, alto-170
+								, 150
+								, 100
+								, false
+								, true
+								, 4
+								, 0
+							)
+						);
+						puntuacion += 8;
+					break;
+				default:;
+			}
+		}
+	};
+
+	
+	/**
+	 * 
+	 */
+	function nivel9(tiempoDesdeInicio){
+		if(finalBoss){
+			elementos.push(
+				new RaggedWinionElement(
+					39
+					, "demoniojefe"
+					, tiempoDesdeInicio
+					, 100
+					, 300
+					, 250
+					, false
+					, true
+					, -19.55
+					, 5
+				)
+			);
+			
+			finalBoss = false;
+			
+			puntuacion += 100;
+		}
+		
+		
+		var frecuenciaSuelo = 4000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaSuelo < ciclo){
+			elementos.push(
+				new RaggedWinionElement(
+					40
+					, "huesos"
+					, tiempoDesdeInicio
+					, alto-50
+					, 120
+					, ancho
+					, true
+					, false
+					, 0
+					, 0
+				)
+			);
+		}
+		
+		/**Elementos **/
+		var frecuenciaNube = 14000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaNube < ciclo){
+			elementos.push(
+				new RaggedWinionElement(
+					21
+					, "nubemalvada"
+					, tiempoDesdeInicio
+					, parseInt(parseInt(Math.random() * 3 - 1) * alto / 5 + 100) 
+					, 120
+					, 240
+					, true
+					, false
+					, parseInt(Math.random() * 10 + 8)
+					, 0
+				)
+			);
+		}
+		
+		var frecuenciaAlma = 18000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaAlma < ciclo){
+			elementos.push(
+				new RaggedWinionElement(
+					21
+					, "alma"
+					, tiempoDesdeInicio
+					, -100 
+					, 80
+					, 80
+					, true
+					, true
+					, 0
+					, parseInt(Math.random() * 15 + 10)
+				)
+			);
+			puntuacion += 15;
+		}
+		
+		var frecuenciaEnemigo = 7000 / velocidad;
+		if(tiempoDesdeInicio % frecuenciaEnemigo < ciclo){
+			switch(parseInt(Math.random() * 10)){
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+					elementos.push(
+						new RaggedWinionElement(
+							Math.random()*10
+							, "minion"
+							, tiempoDesdeInicio
+							, alto-140
+							, 100
+							, 75
+							, false
+							, true
+							, 10
+							, 0
+						)
+					);
+					puntuacion += 6;
+					break;
+				case 5:
+				case 6:
+				case 7:
+					elementos.push(
+						new RaggedWinionElement(
+							15
+							, "esqueleto"
+							, tiempoDesdeInicio
+							, alto-170
+							, 150
+							, 100
+							, false
+							, true
+							, 4
+							, 0
+						)
+					);
+					puntuacion += 8;
+					break;
+				default:;
+			}
 		}
 	};
 };

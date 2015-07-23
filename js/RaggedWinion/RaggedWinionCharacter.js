@@ -43,7 +43,9 @@ function RaggedWinionCharacter(
 	 * @param contexto Canvas Context
 	 * @param anchoPantalla integer
 	 * @param zoom integer
-	 * @param fotogramaActual integer
+	 * @param fps integer
+	 * @param fechaActual integer
+	 * @param velocidad integer
 	 */
 	this.dibujar = function(contexto, zoom, fps, fechaActual, velocidad){
 		var img = null;
@@ -96,7 +98,11 @@ function RaggedWinionCharacter(
 	
 	
 	/**
-	 * Función que hace que el personaje aparezca.
+	 * Método que evalua si el personaje está apoyado o en el aire.
+	 * Method which evaluates if the character is on the floor or in the air.
+	 * 
+	 * @param valor boolean
+	 * @param altoPantalla integer
 	 */
 	this.tocarSuelo = function(valor, altoPantalla){
 		apoyado = valor;
@@ -127,7 +133,8 @@ function RaggedWinionCharacter(
 	
 	
 	/**
-	 * 
+	 * Método que hace aparecer al personaje.
+	 * Method which makes the character apears.
 	 */
 	this.aparecer = function (){
 		jugando = true;
@@ -136,7 +143,11 @@ function RaggedWinionCharacter(
 	
 	
 	/**
+	 * Método que permite al personaje saltar.
+	 * Method which alows the character jump.
 	 * 
+	 * @param velocidad integer
+	 * @param altoPantalla integer
 	 */
 	this.saltar = function (velocidad, altoPantalla){
 		if(apoyado){
@@ -154,7 +165,10 @@ function RaggedWinionCharacter(
 	
 	
 	/**
+	 * Método que permite al personaje bajar de un apoyo.
+	 * Method which alows the character drop himself from somewhere.
 	 * 
+	 * @param altoPantalla integer
 	 */
 	this.bajar = function (altoPantalla){
 		if(apoyado && altura < altoPantalla - alto - 50){
@@ -165,7 +179,8 @@ function RaggedWinionCharacter(
 	
 	
 	/**
-	 * Función que retorna la altura de los pies y la cabeza del personaje.
+	 * Método que retorna las lineas limite del personajes.
+	 * Method which returns the character's limit lines.
 	 */
 	this.getPosicion = function(){
 		return {cabeza: altura, pies: altura+alto, cara: latitud+ancho, espalda: latitud};
@@ -173,16 +188,18 @@ function RaggedWinionCharacter(
 	
 	
 	/**
-	 * Función que elimina al personaje.
+	 * Método que elimina al personaje.
+	 * Method which terminate the character.
 	 */
 	this.eliminar = function(){
-		console.log("Eliminado? "+eliminado);
+		console.log("Eliminado");
 		eliminado = true;
 	};
 	
 	
 	/**
-	 * Función que retorna true si el personaje esta eliminado.
+	 * Método que retorna true si el personaje esta eliminado.
+	 * Method which returns true if the characte is terminated.
 	 */
 	this.getEliminado = function(){
 		return eliminado;

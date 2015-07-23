@@ -2,14 +2,11 @@
 <html>
 	<head>
 		<meta charset='UTF8'>
-		<title>RaggedWinion</title>
+		<title>RaggedWinion - Story</title>
+		<link rel='shortcut icon' href='src/favicon.ico'/>
 		<link rel='shortcut icon' href='./src/favicon.ico'/>
 		<link rel='stylesheet' type='text/css' href='./css/default.css' />
 		<script type="text/JavaScript" src="./js/jDMD/GamingInterface.js"></script>
-		<script type="text/JavaScript" src="./js/motor2D.js"></script>
-		<script type="text/JavaScript" src="./js/RaggedWinion/RaggedWinionCharacter.js"></script>
-		<script type="text/JavaScript" src="./js/RaggedWinion/RaggedWinionElement.js"></script>
-		<script type="text/JavaScript" src="./js/RaggedWinion/RaggedWinionGame.js"></script>
 		
 		<script>
         	function inicio(){
@@ -33,14 +30,9 @@
                 	/**Generamos el objeto Yggdrasil, que nos ayudara a estructurar el arbol de contenidos en funcion del tamaño de la ventana**/
             		interfaz = new GamingInterface(
             			document.getElementById("interfaz")
-            			,document.getElementById("pantalla")
+            			,document.getElementById("texto")
 		            	,document.getElementById("barra")
 		            );
-					
-                	juego = new RaggedWinionGame(
-                		document.getElementById("pantalla")
-                		,document.getElementById("video")
-                	);
             	};
         	}
         </script>
@@ -53,8 +45,7 @@
 				<h2><a href='./instrucciones.html'>Instrucciones</a></h2>
 			</div>
 			
-			<div id='pantalla'>
-				<canvas id='video'>Si puedes leer este texto... por favor, usa un navegador mas moderno.</canvas>
+			<div id='texto'>
 			</div>
 		</div>
 	</body>

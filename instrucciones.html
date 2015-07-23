@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='UTF8'>
+		<title>RaggedWinion - Instrucciones</title>
+		<link rel='shortcut icon' href='./src/favicon.ico'/>
+		<link rel='stylesheet' type='text/css' href='./css/default.css' />
+		<script type="text/JavaScript" src="./js/jDMD/GamingInterface.js"></script>
+		
+		<script>
+        	function inicio(){
+            	//var ca = new AsinCronos("templates/standar.con.php");
+				tratarElementos();
+				
+            	/*
+            	setInterval(
+                    function(){
+                        if(ca.check())tratarElementos();
+                    }
+                  	,500
+                 );
+            	*/
+                
+
+                /**Funciones generadas al inicio**/
+				var interfaz, juego;
+                
+            	function tratarElementos(){
+                	/**Generamos el objeto Yggdrasil, que nos ayudara a estructurar el arbol de contenidos en funcion del tamaño de la ventana**/
+            		interfaz = new GamingInterface(
+            			document.getElementById("interfaz")
+            			,document.getElementById("texto")
+		            	,document.getElementById("barra")
+		            );
+            	};
+        	}
+        </script>
+	</head>
+	<body onload='inicio();'>
+		<div id='interfaz'>
+			<div id='barra'>
+				<h1><a href='.'>RaggedWinion</a></h1>
+				<h2><a href='./story.html'>Comic</a></h2>
+				<h2><a href='./instrucciones.html'>Instrucciones</a></h2>
+			</div>
+			
+			<div id='texto'>
+				<h2>
+					<img src='src/cristal10.png' height='50px'>
+					<img src='src/cristal20.png' height='50px'>
+					Cristal de poder
+				</h2>
+				<p>
+					El cristal de poder indica la velocidad y fuerza del <b>Winion</b>, el pequeño minion enfadado.
+					<br/><br/>
+					Para aumentar el poder del cristal usa las flechas izquierda o derecha del teclado.
+				</p>
+			
+				<div>
+					<h2>
+						<img src='src/esfera10.png' height='40px'>
+						<img src='src/esfera21.png' height='40px'>
+						Enemigos
+					</h2>
+					<p>
+								La resistencia de los enemigos está indicada por una esfera que les sigue. 
+								<br/><br/>
+								A más claro sea el color de la esfera, necesitarás mas potencia del cristal para matarlos.
+								<br/><br/>
+								Los enemigos con una esfera blanca son inmortales, te combiene esquivarlos.
+					</p>
+				</div>
+				
+				<div>
+					<h2>
+						<img src='src/personajeSaltando.png' height='50px'>
+						<img src='src/personajeCayendo.png' height='50px'>
+						Salto
+					</h2>
+					<p>
+						Cuanto más rápido vayas mas alto saltaras pero mas dificil te será ver donde vas a caer.
+						<br/><br/>
+						Existen enemigos sobre los que te puedes apoyar si les caes justo encima.
+						<br/><br/>
+						Recuerda que si has saltado podrás volver a saltar en el aire.
+					</p>
+				</div>
+				
+				<div>
+					<h2>Consejos:</h2>
+					<p>
+						Acelera para eliminar a los enemigos debiles y modera la velocidad contra los inmortales.
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

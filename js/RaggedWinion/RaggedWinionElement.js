@@ -67,6 +67,40 @@ function RaggedWinionElement(
 		}
 		
 		if(img != null){
+			if(mortal){
+				var icono = new Image();
+				if(resistencia + velocidadHorizontal <= 10){
+					icono.src = "src/esfera10.png";
+				}
+				else if(resistencia + velocidadHorizontal <= 12){
+					icono.src = "src/esfera12.png";
+				}
+				else if(resistencia + velocidadHorizontal <= 14){
+					icono.src = "src/esfera14.png";
+				}
+				else if(resistencia + velocidadHorizontal <= 16){
+					icono.src = "src/esfera16.png";
+				}
+				else if(resistencia + velocidadHorizontal <= 18){
+					icono.src = "src/esfera18.png";
+				}
+				else if(resistencia + velocidadHorizontal <= 20){
+					icono.src = "src/esfera20.png";
+				}
+				else{
+					icono.src = "src/esfera21.png";
+				}
+				
+				if(icono != null){
+					contexto.drawImage(
+						icono
+						, parseInt((anchoPantalla - recorrido + ancho) * zoom)
+						, parseInt((altura - 86)*zoom)
+						, 60*zoom
+						, 60*zoom
+					);
+				}
+			}
 			contexto.drawImage(img, parseInt((anchoPantalla - recorrido)*zoom), parseInt((altura-20)*zoom), ancho*zoom, alto*zoom);
 		}
 	};
@@ -119,7 +153,7 @@ function RaggedWinionElement(
 	 * Función que devuelve true si el elemento es mortal.
 	 */
 	this.getMortal = function(velocidad){
-		if(velocidad - velocidadHorizontal >= resistencia){
+		if(velocidad >= resistencia + velocidadHorizontal){
 			destruido = true;
 			return false;
 		}
