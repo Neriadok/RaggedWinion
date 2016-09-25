@@ -16,7 +16,7 @@ function GamingInterface(pantalla){
 		,anchoPantalla
 		,altoPantalla
 		,medidaMargen = 100
-		,relacionDimensiones = 75/100
+		,relacionDimensiones = 60/100
 	;
 	
 	/**Methods**/
@@ -42,7 +42,7 @@ function GamingInterface(pantalla){
 		altoPagina = window.innerHeight;
 		anchoPagina = window.innerWidth;
 		
-		if(anchoPagina + medidaMargen < altoPagina / relacionDimensiones){
+		if((anchoPagina + medidaMargen) < altoPagina / relacionDimensiones){
 			anchoPantalla = anchoPagina - medidaMargen;
 			altoPantalla = anchoPantalla * relacionDimensiones;
 

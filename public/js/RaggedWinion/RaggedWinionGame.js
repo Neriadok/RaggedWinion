@@ -10,37 +10,37 @@ function RaggedWinionGame(
 	/******* CONSTRUCTOR *******/	
 	
 	/**Atributos - Atributes**/
-	var relacionDimensiones = 75/100;
-	var zoom = 1;
-	var ancho = 1000;
-	var alto = ancho * relacionDimensiones;
-	
-	var fps = 40;
-	var fpsRealesVideo = fps;
-	var fotogramas = 0;
-	
-	var ciclo = 20;
-	var duracionNivel = 30000;
-	var velocidadMax = 20;
-	var velocidadMin = 10;
-	var velocidad = velocidadMin;
-	var aceleracion = 2;
-	var inicio = false;
-	var pausa = true;
-	var puntuacion = 0;
-	
-	var fechaUltimoFotograma = new Date().getTime();
-	var fechaInicio = fechaUltimoFotograma;
-	var fechaUltimaPausa = null;
-	var tiempoEnPausa = 0;
+	var relacionDimensiones = 60/100
+	,	zoom = 1
+	,	alto = 750
+	,	ancho = alto / relacionDimensiones
 
-	var red = 100;
-	var blue = 255;
-	var green = 100;
-	var bgColor = "rgb("+ red +","+ green +","+ blue +")";
+	,	fps = 40
+	,	fpsRealesVideo = fps
+	,	fotogramas = 0
+	
+	,	ciclo = 20
+	,	duracionNivel = 30000
+	,	velocidadMax = 20
+	,	velocidadMin = 10
+	,	velocidad = velocidadMin
+	,	aceleracion = 2
+	,	inicio = false
+	,	pausa = true
+	,	puntuacion = 0
+	
+	,	fechaUltimoFotograma = new Date().getTime()
+	,	fechaInicio = fechaUltimoFotograma
+	,	fechaUltimaPausa = null
+	,	tiempoEnPausa = 0
 
-	var personaje = new RaggedWinionCharacter("personaje", ancho);
-	var elementos = [];
+	,	red = 100
+	,	blue = 255
+	,	green = 100
+	,	bgColor = "rgb("+ red +","+ green +","+ blue +")"
+
+	,	personaje = new RaggedWinionCharacter("personaje", ancho)
+	,	elementos = [];
 
 	pantalla.style.zIndex = "1";
 	video.style.zIndex = "2";
